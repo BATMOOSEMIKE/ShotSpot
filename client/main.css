@@ -1,0 +1,55 @@
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Nunito";
+  color:#1f1c1c;
+  font-size:1em;
+  -webkit-font-smoothing: antialiased; /* This needs to be set or some font faced fonts look bold on Mac in Chrome/Webkit based browsers. */
+  -moz-osx-font-smoothing: grayscale; /* Fixes font bold issue in Firefox version 25+ on Mac */
+}
+
+#map {
+  height: 100%;
+  width: 100%;
+}
+
+.header {
+  height: 70px;
+  width: 100%;
+  position: absolute;
+  z-index: 5;
+  display: flex;
+  padding: 20px 20px 0;
+  box-sizing: border-box;
+}
+
+.header h1 {
+  margin: 0;
+}
+
+.header span {
+  color: #FF5722;
+}
+
+.search {
+  margin-left: auto;
+}
+
+#search{
+  width: 300px;
+  font-size: 21px;
+  border: none;
+  border-radius: 5px;
+  background: #FAFAFA;
+  padding: 15px;
+  font-family: "Nunito";
+  text-overflow: ellipsis;
+    
+}
+
+#search:focus{
+  outline: none;
+  background: #fff;
+  transition: all ease-in-out .5s;
+}

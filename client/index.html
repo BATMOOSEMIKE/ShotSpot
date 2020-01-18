@@ -1,0 +1,31 @@
+<html>
+
+<head>
+  <title>Shotspot</title>
+
+  <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+  <!-- stylesheets -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito">
+  <link rel="stylesheet" href="main.css">
+</head>
+
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="search">
+        <input id="search" type="text" placeholder="🔎 Search a location...">
+      </div>
+    </div>
+    <div id="map"></div>
+  </div>
+  </div>
+</body>
+
+<!-- scripts -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="/static/js/gmaps.min.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDHftIUssKk4Y1BVGk9jF6hE_NcLsjqZ_I"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="script.js"></script>
+
+</html>
