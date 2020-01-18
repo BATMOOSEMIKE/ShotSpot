@@ -1,7 +1,9 @@
+var currentLocation = "New York City";
+
 var map = new GMaps({
   el: '#map',
-  lat: 49.2827,
-  lng: 123.1207,
+  lat: 40.70,
+  lng: -74.0060,
   zoomControl: false,
   mapTypeControl: false,
   scaleControl: false,
@@ -89,6 +91,7 @@ var map = new GMaps({
     }
   ]
 });
+$("#search").val(currentLocation);
 
 var socket = io();
 socket.emit('start');
@@ -99,6 +102,10 @@ var options = {
   maximumAge: 0
 };
 
+function setMapPosition(lat, lng) {
+  map.setCenter(lat, lng, () => {})
+}
+
 function positionSuccess(pos) {
   var coords = pos.coords;
 
@@ -107,11 +114,50 @@ function positionSuccess(pos) {
   console.log(`Longitude: ${coords.longitude}`);
   console.log(`Accuracy: ${coords.accuracy} meters.`);
 
-  map.setCenter(coords.latitude, coords.longitude, () => {})
+  setMapPosition(coords.latitude, coords.longitude);
 }
 
 function positionError(err) {
   console.warn(`Could not get location (${err.code}): ${err.message}`);
 }
 
-navigator.geolocation.getCurrentPosition(positionSuccess, positionError, options);
+$("#pinpoint").click(() => {
+  navigator.geolocation.getCurrentPosition(positionSuccess, positionError, options);
+})
+
+function initializeAutocomplete(id) {
+  var element = document.getElementById(id);
+  if (element) {
+    var autocomplete = new google.maps.places.Autocomplete(element, { types: ['geocode'] });
+    google.maps.event.addListener(autocomplete, 'place_changed', onPlaceChanged);
+  }
+}
+
+function onPlaceChanged() {
+  var place = this.getPlace();
+  var loc = place.geometry.location;
+  console.log(loc);
+  setMapPosition(loc.lat(), loc.lng());
+
+  for (var i in place.address_components) {
+    var component = place.address_components[i];
+    for (var j in component.types) {  // Some types are ["country", "political"]
+      var type_element = document.getElementById(component.types[j]);
+      if (type_element) {
+        type_element.value = component.long_name;
+      }
+    }
+  }
+}
+
+google.maps.event.addDomListener(window, 'load', function() {
+  initializeAutocomplete('search');
+});
+
+$("#search").click(() => {
+  $("#search").val("")
+})
+
+$("#search").blur(() => {
+  $("#search").val(currentLocation);
+})

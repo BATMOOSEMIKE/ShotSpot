@@ -18,7 +18,7 @@ io.on('connection', function(socket){
       if (!error && response.statusCode == 200) {
         return parse(body, {}, function(err, output) {
           if (output && !err) {
-            updateClient(output.map(x => x.slice(0,2)).slice(1));
+            // updateClient(output.map(x => x.slice(0,2)).slice(1));
           }
         });
       }

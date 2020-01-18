@@ -13,7 +13,9 @@
   <div class="container">
     <div class="header">
       <div class="search">
-        <input id="search" type="text" placeholder="🔎 Search a location...">
+        <div class="search-icon">🔎</div>
+        <input id="search" type="text" value="127.0.0.1" placeholder="Search city/location/hotspot">
+        <button class="open" id="pinpoint"><img src="static/img/pinpoint.svg"/></button>
       </div>
     </div>
     <div id="map"></div>
@@ -24,7 +26,7 @@
 <!-- scripts -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="/static/js/gmaps.min.js"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDHftIUssKk4Y1BVGk9jF6hE_NcLsjqZ_I"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDHftIUssKk4Y1BVGk9jF6hE_NcLsjqZ_I&libraries=places"></script>
 <script src="/socket.io/socket.io.js"></script>
 <script src="script.js"></script>
 

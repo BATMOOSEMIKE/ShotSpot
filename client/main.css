@@ -45,11 +45,46 @@ body {
   padding: 15px;
   font-family: "Nunito";
   text-overflow: ellipsis;
-    
+  padding-left: 60px;
 }
 
 #search:focus{
   outline: none;
   background: #fff;
   transition: all ease-in-out .5s;
+}
+
+button{
+  display:inline-block;
+  vertical-align:middle;
+  border-radius:30px;
+  font-size: 1rem;
+  color:#666666;
+  background:   #ffffff;
+  border:1px solid #666666;
+  width: 40px;
+  height: 40px;
+  margin-bottom: 8px;
+  margin-left: 10px;
+}
+
+button:hover{
+  border:1px solid #666666;
+  background:#666666;
+  color:#ffffff;
+  cursor: hand;
+}
+
+.search-icon {
+  top: 0.9em;
+  left: 1em;
+}
+
+.search-icon {
+  position: relative;
+  top: 1.8em;
+  pointer-events: none;
+  left: 0.6em;
+  z-index: 1000;
+  font-size: 1.75em;
 }
