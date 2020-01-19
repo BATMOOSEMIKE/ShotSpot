@@ -22,8 +22,16 @@ function readJsonFileSync(filepath, encoding){
 
 // locationId is id corresponding to location w/ respect to Google Places API
 function getPhotos(locationId){
-  const filepath = __dirname + '/locations/' + locationId + ".json";
-  return readJsonFileSync(filepath);
+  request('https://shotspot-server.s3.amazonaws.com/' + locationId + ".json", (error, response, body) => {
+    if (!error && response.statusCode == 200) {
+      var importedJSON = JSON.parse(body);
+      //  console.log(importedJSON);
+      return importedJSON;
+    }
+  })
+  // const filepath = __dirname + '/locations/' + locationId + ".json";
+  // return readJsonFileSync(filepath);
+  return null;
 }
 
 io.on('connection', function(socket){
