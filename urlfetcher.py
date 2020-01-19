@@ -21,6 +21,7 @@ def getlinks(locationid, url):
         for post in data['entry_data']['LocationsPage'][0]['graphql'
             ]['location']['edge_location_to_top_posts']['edges']:
             images_links.append(post['node']['thumbnail_resources'][1]['src'])
+            if len(images_links) == 9: break
         lat = data['entry_data']['LocationsPage'][0]['graphql'
             ]['location']['lat']
         lng = data['entry_data']['LocationsPage'][0]['graphql'
@@ -43,10 +44,12 @@ def populateloc(file):
             locs.update({"lat" : str(scraped.get('lat'))})
         if not locs.get('long'):
             locs.update({'long' : str(scraped.get('long'))})
-        locs['photos'].clear()
+        if not locs.get('photos') and scraped.get('links'):
+            locs['photos'].clear()
         
-        for links in scraped.get('links'):
-            locs['photos'].append(links)
+        for link in scraped.get('links'):
+            if link not in locs['photos']: 
+                locs['photos'].append(link)
     # Write new loc
     with open(file, "w") as outfile: 
         json.dump(opened, outfile, indent=4) 
@@ -58,7 +61,7 @@ while(True):
     ctx.verify_mode = ssl.CERT_NONE
 
     # populate loc files in directory with hot photo links
-    path = "../server/locations"
+    path = "./locations"
     directory = os.fsencode(path)
     for file in os.listdir(directory):
          filename = os.fsdecode(file)
