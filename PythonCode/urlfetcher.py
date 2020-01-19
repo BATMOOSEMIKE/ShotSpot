@@ -51,7 +51,6 @@ def populateloc(file):
     with open(file, "w") as outfile: 
         json.dump(opened, outfile, indent=4) 
 
-<<<<<<< Updated upstream
 #FETCH
 while(True):
     ctx = ssl.create_default_context()
@@ -68,8 +67,3 @@ while(True):
             time.sleep(5) # delay requests by 5 seconds
     time.sleep(300) # call every 5 mins
             
-=======
-if __name__ == '__main__':
-    obj = Insta_Image_Links_Scraper()
-    obj.main()
->>>>>>> Stashed changes
