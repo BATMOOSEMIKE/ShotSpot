@@ -2,7 +2,7 @@
 var express = require('express');
 var http = require('http');
 const request = require('request');
-const parse = require('csv-parse')
+var fs = require('fs');
 
 var app = express();
 var server = http.createServer(app);
@@ -11,18 +11,26 @@ var io = require('socket.io').listen(server);
 // serve front-end website
 app.use(express.static('../client'));
 
+function readJsonFileSync(filepath, encoding){
+  if (typeof (encoding) == 'undefined'){
+      encoding = 'utf8';
+  }
+
+  var file = fs.readFileSync(filepath, encoding);
+  return JSON.parse(file);
+}
+
+// locationId is id corresponding to location w/ respect to Google Places API
+function getPhotos(locationId){
+  var filepath = __dirname + '/locations/' + locationId + ".json";
+  return readJsonFileSync(filepath);
+}
+
 io.on('connection', function(socket){
-  socket.on('start', function(){
-    request('https://firms.modaps.eosdis.nasa.gov/data/active_fire/c6/csv/MODIS_C6_Global_24h.csv',
-    function (error, response, body) {
-      if (!error && response.statusCode == 200) {
-        return parse(body, {}, function(err, output) {
-          if (output && !err) {
-            // updateClient(output.map(x => x.slice(0,2)).slice(1));
-          }
-        });
-      }
-    });
+  socket.on('load_city', function(locationId){
+    var json = getPhotos(locationId);
+    socket.json.emit('load_finish', json);
+    console.log(json);
   });
 });
 

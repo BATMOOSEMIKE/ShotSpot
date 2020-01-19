@@ -1,0 +1,20 @@
+{
+    "cities" : [
+        {
+            "name" : "Vancouver",
+            "id" : "73c0f2c8244c8770f1af0c29eb7fcfe0c88be45d"
+        },
+        {
+            "name" : "New York",
+            "id" : "7eae6a016a9c6f58e2044573fb8f14227b6e1f96"
+        },
+        {
+            "name" : "Toronto",
+            "id" : "9cdc0b86ce6052ab269593184e7762372e698584"
+        },
+        {
+            "name" : "Waterloo",
+            "id" : "67a11386eaad1442f950a8ddbc8bea2a8ab31dee"
+        }
+    ]
+}
