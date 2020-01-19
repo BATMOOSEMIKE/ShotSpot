@@ -17,19 +17,22 @@ def getlinks(locationid, url):
         page_json = script.text.split(' = ', 1)[1].rstrip(';')
         data = json.loads(page_json)
         images_links = []
+        post_links = []
         print ('Scraping links with IG locationid: ' + locationid +"...........")
         for post in data['entry_data']['LocationsPage'][0]['graphql'
             ]['location']['edge_location_to_top_posts']['edges']:
             images_links.append(post['node']['thumbnail_resources'][1]['src'])
-            if len(images_links) == 9: break
+            print(post['node']['shortcode'])
+            post_links.append(post['node']['shortcode'])
+            if len(images_links) == 8: break
         lat = data['entry_data']['LocationsPage'][0]['graphql'
             ]['location']['lat']
         lng = data['entry_data']['LocationsPage'][0]['graphql'
             ]['location']['lng'] 
-        return {"lat" : lat, "long" : lng, "links" : images_links}
+        return {"lat" : lat, "long" : lng, "links" : images_links, "urls": post_links}
     except:
         print("Error resolving location ID #" + str(locationid))
-        return {"lat" : "40.70", "long" : "-74.0060", "links" : []}
+        return {"lat" : "40.70", "long" : "-74.0060", "links" : [], "urls": []}
 
 
 def populateloc(file):
@@ -50,6 +53,13 @@ def populateloc(file):
         for link in scraped.get('links'):
             if link not in locs['photos']: 
                 locs['photos'].append(link)
+        
+        if not locs.get('urls') and scraped.get('urls'):
+            locs['urls'].clear()
+        
+        for url in scraped.get('urls'):
+            if url not in locs['urls']: 
+                locs['urls'].append(url)
     # Write new loc
     with open(file, "w") as outfile: 
         json.dump(opened, outfile, indent=4) 

@@ -136,6 +136,7 @@ body {
 
 .icon {
   width: 33.333333%;
+  cursor: hand;
 }
 
 .popup-header {

@@ -229,6 +229,10 @@ function seeMore(id) {
   openInNewTab("https://www.instagram.com/explore/locations/" + id);
 }
 
+function openPost(shortcode) {
+  openInNewTab("https://www.instagram.com/p/" + shortcode);
+}
+
 function closeModal() {
   map.hideInfoWindows();
 }
@@ -242,6 +246,7 @@ function populateMap(data) {
     const id = location.id;
     const latlng = {lat: location.lat, lng: location.long};
     const photos = location.photos;
+    const urls = location.urls;
 
     var content = 
     `
@@ -264,9 +269,11 @@ function populateMap(data) {
         <div class="grid">
     `;
     
-    for (var j = 0; j < photos.length; j++) {
+    for (var j = 0; j < 9; j++) {
       const url = photos[j];
-      content += `<img class="icon" src='${url}'></img>`;
+      if (url) {
+        content += `<img class="icon" src='${url}' onclick="openPost('${urls[j]}')"></img>`;
+      }
     }
 
     content += '</div></div>';

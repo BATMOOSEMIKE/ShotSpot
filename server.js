@@ -44,7 +44,8 @@ io.on('connection', function(socket){
       id: "-1",
       lat: pos.lat,
       long: pos.lng,
-      photos: [url]
+      photos: [url],
+      urls: []
     })
     const toWrite = JSON.stringify(obj, null, 4); // pretty-print json
     console.log(toWrite)
