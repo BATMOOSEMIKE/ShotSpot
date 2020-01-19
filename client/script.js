@@ -160,7 +160,7 @@ function onPlaceChanged() {
   currentLocation = place.formatted_address;
 
   // to get full returned object
-  // console.log(place);
+  console.log(place);
 
   setMapPosition(loc.lat(), loc.lng());
 

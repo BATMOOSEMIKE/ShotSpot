@@ -56,7 +56,7 @@ body {
   transition: all ease-in-out .5s;
 }
 
-button{
+.open{
   display:inline-block;
   vertical-align:middle;
   border-radius:30px;
@@ -70,7 +70,7 @@ button{
   margin-left: 10px;
 }
 
-button:hover{
+.open:hover{
   border:1px solid #666666;
   background:#666666;
   color:#ffffff;
@@ -89,4 +89,18 @@ button:hover{
   left: 0.6em;
   z-index: 1000;
   font-size: 1.75em;
+}
+
+#add-location {
+  position: fixed;
+  font-family: "Nunito";
+  z-index: 5;
+  border-radius: 5px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  text-align: center;
+  font-weight: 800;
+  font-size: 2.5em;
+  padding: 0 10px;
+  bottom: 1em;
+  left: 0.5em;
 }

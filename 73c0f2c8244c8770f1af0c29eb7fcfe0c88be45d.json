@@ -1,0 +1,67 @@
+{
+   "city": "Vancouver",
+   "lat": 49.2827,
+   "long": -123.1207,
+   "locations" : [
+      {
+         "name": "Lion's Gate Bridge",
+         "id": "32198",
+         "lat": 49.319901,
+         "long": -123.134438,
+         "photos": [
+            {
+               "url": "https://_____/something.png",
+               "ig": "https://www.instagram.com/p/Buki4zeFPSC/"
+            },
+            {
+               "url": "https://_____/something.png",
+               "ig": "https://www.instagram.com/p/Buki4zeFPSC/"
+            },
+            {
+               "url": "https://_____/something.png",
+               "ig": "https://www.instagram.com/p/Buki4zeFPSC/"
+            }
+         ]
+      },
+      {
+         "name": "Stanley Park",
+         "id": "211860868",
+         "lat": 49.300362,
+         "long": -123.142593,
+         "photos": [
+            {
+               "url": "https://_____/something.png",
+               "ig": "https://www.instagram.com/p/Buki4zeFPSC/"
+            },
+            {
+               "url": "https://_____/something.png",
+               "ig": "https://www.instagram.com/p/Buki4zeFPSC/"
+            },
+            {
+               "url": "https://_____/something.png",
+               "ig": "https://www.instagram.com/p/Buki4zeFPSC/"
+            }
+         ]
+      },
+      {
+         "name": "Granville Island",
+         "id": "3079",
+         "lat": 49.272251,
+         "long": -123.132973,
+         "photos": [
+            {
+               "url": "https://_____/something.png",
+               "ig": "https://www.instagram.com/p/Buki4zeFPSC/"
+            },
+            {
+               "url": "https://_____/something.png",
+               "ig": "https://www.instagram.com/p/Buki4zeFPSC/"
+            },
+            {
+               "url": "https://_____/something.png",
+               "ig": "https://www.instagram.com/p/Buki4zeFPSC/"
+            }
+         ]
+      }
+   ]
+}
