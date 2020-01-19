@@ -506,6 +506,24 @@
             ],
             "lat": "43.5098127037",
             "long": "-80.4838550702"
+        },
+        {
+            "name": "Waterloo University",
+            "id": "192380",
+            "troll": "1"
+            "lat": "43.472114"
+            "long": "-80.545534"
+            "photos": [
+              "https://imgur.com/PbtWVsj"
+              "https://imgur.com/JsegtMr"
+              "https://imgur.com/yXeziR6"
+              "https://imgur.com/CybM2QJ"
+              "https://imgur.com/r2Yn2Q1"
+              "https://imgur.com/ddrMbln"
+              "https://imgur.com/RgfOPRJ"
+              "https://imgur.com/VRsVZbz"
+              "https://imgur.com/f4RZr1l"
+            ],
         }
     ]
 }
