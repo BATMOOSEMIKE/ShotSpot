@@ -1,5 +1,6 @@
 var currentLocation = "New York City";
 var placingPin = false;
+var socket = io();
 
 var map = new GMaps({
   el: '#map',
@@ -104,7 +105,6 @@ var map = new GMaps({
 });
 setCurrentLocation(currentLocation);
 
-var socket = io();
 socket.emit('start');
 
 var options = {
@@ -164,6 +164,7 @@ function onPlaceChanged() {
   console.log(place);
 
   setMapPosition(loc.lat(), loc.lng());
+  socket.emit('load_city', place.id);
 
   for (var i in place.address_components) {
     var component = place.address_components[i];
@@ -200,7 +201,7 @@ $("#add-location").click(() => {
 $(document).mousemove(function(e){
   if (placingPin) {
     $("#marker").css({left:e.pageX, top:e.pageY});
-  }
+  } 
 });
 
 google.maps.event.addDomListener(window, 'click', function() {
@@ -210,3 +211,34 @@ google.maps.event.addDomListener(window, 'click', function() {
     $("#marker").hide();
   }
 });
+
+// takes in JSON data from Express server and populates the map
+function populateMap(data) {
+  const locations = data.locations;
+  for(var i = 0; i < locations.length; i++) {
+    const location = locations[i];
+    const name = location.name;
+    const latlng = {lat: location.lat, lng: location.long};
+    const photos = location.photos;
+    for (var j = 0; j < photos.length; j++) {
+      // TODO
+    }
+
+    // add the marker
+    map.addMarker({
+      lat: location.lat,
+      lng: location.long,
+      title: name,
+      label: {
+        color: 'white',
+        fontWeight: 'bold',
+        text: name,
+      },
+    });
+  }
+  console.log(data);
+}
+
+socket.on('load_finish', (data) => {
+  populateMap(data);
+})
