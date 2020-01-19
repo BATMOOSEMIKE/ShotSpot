@@ -104,3 +104,15 @@ body {
   bottom: 1em;
   left: 0.5em;
 }
+
+#marker {
+  position: absolute;
+  display: none;
+  z-index: 5;
+  height: 32px;
+  width: 32px;
+  -webkit-transform: translate(-50%, -100%);
+  top: 0px;
+  left: 0px;
+  color: white;
+}

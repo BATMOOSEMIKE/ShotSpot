@@ -1,4 +1,5 @@
 var currentLocation = "New York City";
+var placingPin = false;
 
 var map = new GMaps({
   el: '#map',
@@ -186,3 +187,26 @@ $("#search").click(() => {
 $("#search").blur(() => {
   setCurrentLocation(currentLocation);
 })
+
+// Logic for adding locations
+
+$("#add-location").click(() => {
+  setTimeout(() => {
+    placingPin = true;
+    $("#marker").show();
+  }, 100);
+})
+
+$(document).mousemove(function(e){
+  if (placingPin) {
+    $("#marker").css({left:e.pageX, top:e.pageY});
+  }
+});
+
+google.maps.event.addDomListener(window, 'click', function() {
+  if (placingPin) {
+    placingPin = false;
+    console.log(event)
+    $("#marker").hide();
+  }
+});
