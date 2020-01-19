@@ -42,6 +42,7 @@ def populateloc(file):
         if not locs.get('long'):
             locs.update({'long' : str(scraped.get('long'))})
         locs['photos'].clear()
+        
         for links in scraped.get('links'):
             locs['photos'].append(links)
     # Write new loc
