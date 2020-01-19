@@ -91,7 +91,7 @@ var map = new GMaps({
     }
   ]
 });
-$("#search").val(currentLocation);
+setCurrentLocation(currentLocation);
 
 var socket = io();
 socket.emit('start');
@@ -106,6 +106,10 @@ function setMapPosition(lat, lng) {
   map.setCenter(lat, lng, () => {})
 }
 
+function setCurrentLocation(loc) {
+  $("#search").val(loc);
+}
+
 function positionSuccess(pos) {
   var coords = pos.coords;
 
@@ -115,6 +119,8 @@ function positionSuccess(pos) {
   console.log(`Accuracy: ${coords.accuracy} meters.`);
 
   setMapPosition(coords.latitude, coords.longitude);
+  currentLocation = "Your location";
+  setCurrentLocation(currentLocation);
 }
 
 function positionError(err) {
@@ -122,6 +128,9 @@ function positionError(err) {
 }
 
 $("#pinpoint").click(() => {
+  currentLocation = "Getting current location...";
+  setCurrentLocation(currentLocation);
+
   navigator.geolocation.getCurrentPosition(positionSuccess, positionError, options);
 })
 
@@ -136,7 +145,13 @@ function initializeAutocomplete(id) {
 function onPlaceChanged() {
   var place = this.getPlace();
   var loc = place.geometry.location;
-  console.log(loc);
+
+  // set current location from later use
+  currentLocation = place.formatted_address;
+
+  // to get full returned object
+  // console.log(place);
+
   setMapPosition(loc.lat(), loc.lng());
 
   for (var i in place.address_components) {
@@ -155,9 +170,9 @@ google.maps.event.addDomListener(window, 'load', function() {
 });
 
 $("#search").click(() => {
-  $("#search").val("")
+  setCurrentLocation("");
 })
 
 $("#search").blur(() => {
-  $("#search").val(currentLocation);
+  setCurrentLocation(currentLocation);
 })
