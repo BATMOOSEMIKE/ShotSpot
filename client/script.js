@@ -1,5 +1,6 @@
 var currentLocation = "New York City";
 var placingPin = false;
+var clicked = false;
 var socket = io();
 
 var map = new GMaps({
@@ -204,7 +205,7 @@ $(document).mousemove(function(e){
   } 
 });
 
-google.maps.event.addDomListener(window, 'click', function() {
+google.maps.event.addDomListener(window, 'click', function() {  
   if (placingPin) {
     placingPin = false;
     console.log(event)
@@ -212,18 +213,50 @@ google.maps.event.addDomListener(window, 'click', function() {
   }
 });
 
+function openInNewTab(url) {
+  var win = window.open(url, '_blank');
+  win.focus();
+}
+
+function seeMore(id) {
+  openInNewTab("https://www.instagram.com/explore/locations/" + id);
+}
+
+function closeModal() {
+  map.hideInfoWindows();
+}
+
 // takes in JSON data from Express server and populates the map
 function populateMap(data) {
   const locations = data.locations;
   for(var i = 0; i < locations.length; i++) {
     const location = locations[i];
     const name = location.name;
+    const id = location.id;
     const latlng = {lat: location.lat, lng: location.long};
     const photos = location.photos;
-    for (var j = 0; j < photos.length; j++) {
-      // TODO
+
+    var content = 
+    `
+      <div class="popup">
+        <div class="row">
+          <h2 class="popup-header">${name}</h2>
+
+          <div class="buttons">
+            <a class="button red see-more" onclick="seeMore(${id})">See More</a>
+            <a class="button red close" onclick="closeModal()">Close</a>
+          </div>
+        </div>
+        <div class="grid">
+    `;
+    
+    for (var j = 0; j < 9; j++) {
+      const url = photos[j];
+      content += `<img class="icon" src='${url}'></img>`;
     }
 
+    content += '</div></div>';
+    
     // add the marker
     map.addMarker({
       lat: location.lat,
@@ -234,6 +267,16 @@ function populateMap(data) {
         fontWeight: 'bold',
         text: name,
       },
+      infoWindow: {
+        content: content
+      },
+      icon: {
+        labelOrigin: new google.maps.Point(11, 50),
+        url: 'https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_red.png',
+        size: new google.maps.Size(22, 40),
+        origin: new google.maps.Point(0, 0),
+        anchor: new google.maps.Point(11, 40),
+      }
     });
   }
   console.log(data);

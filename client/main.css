@@ -116,3 +116,102 @@ body {
   left: 0px;
   color: white;
 }
+
+.img-preview {
+  width: 150px;
+  height: 150px;
+}
+
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  width: 500px;
+  padding-right: 12px !important;
+}
+
+.grid button {
+  display: none;
+}
+
+.icon {
+  width: 33.333333%;
+}
+
+.popup-header {
+  font-family: "Nunito";
+  font-weight: 800;
+  font-size: 2em;
+  float: left;
+  margin: 10 0px;
+  padding: 0px;
+  color: white !important;
+  display: inline-block;
+  white-space: nowrap;
+  max-width: 280px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.buttons {
+  float: right;
+  display: inline-block;
+  margin-right: 7px;
+}
+
+/* ----- Button styling ----- */
+.button{
+  width: 80px;
+  display: block;
+  float: left;
+  border-radius:3px;
+  margin: 10px 5px;
+  padding: 5px 10px;
+  text-align:center;
+  text-decoration:none;
+  font-family: "Nunito";
+  color: #ecf0f1;
+}
+
+.red{
+  box-shadow: 0px 6px #c0392b;
+  background: #e74c3c;
+}
+
+.red:hover, .red:active{
+  cursor: hand;
+  box-shadow: 0px 6px #ab3326;
+  background: #c0392b;
+}
+
+/* ----- Info window styling (classes prone to change at Google's discretion) ----- */
+.gm-style .gm-style-iw {
+  background-color: #252525 !important;
+}
+
+.gm-style .gm-style-iw-c {
+  padding-bottom: 14px !important;
+}
+
+.view-link a {
+  background-color: #252525 !important;
+  margin-bottom: 10px;
+}
+
+.gm-style-iw-d, .poi-info-window div {
+  overflow: hidden !important;
+  background-color: #252525 !important;
+}
+
+/*style the link*/
+.gm-style div div div div div div div div a {
+  color: #f1f1f1;
+  font-weight: bold;
+}
+
+.poi-info-window .title, .poi-info-window .address-line {
+  color: white;
+}
+
+.gm-ui-hover-effect {
+  display: none !important;
+}
