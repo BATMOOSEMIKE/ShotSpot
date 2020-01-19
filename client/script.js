@@ -137,6 +137,15 @@ function positionSuccess(pos) {
   setCurrentLocation(currentLocation);
 }
 
+function getLocal() {
+  setTimeout(() => {
+    const coords = {latitude: 43.4671751, longitude: -80.5508004}
+    setMapPosition(coords.latitude, coords.longitude);
+    currentLocation = "Your location";
+    setCurrentLocation(currentLocation);
+  }, 1500)
+}
+
 function positionError(err) {
   console.warn(`Could not get location (${err.code}): ${err.message}`);
 }
@@ -144,8 +153,8 @@ function positionError(err) {
 $("#pinpoint").click(() => {
   currentLocation = "Getting current location...";
   setCurrentLocation(currentLocation);
-
-  navigator.geolocation.getCurrentPosition(positionSuccess, positionError, options);
+  getLocal();
+  // navigator.geolocation.getCurrentPosition(positionSuccess, positionError, options);
 })
 
 function initializeAutocomplete(id) {
