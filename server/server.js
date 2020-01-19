@@ -16,22 +16,42 @@ function readJsonFileSync(filepath, encoding){
       encoding = 'utf8';
   }
 
-  var file = fs.readFileSync(filepath, encoding);
+  const file = fs.readFileSync(filepath, encoding);
   return JSON.parse(file);
 }
 
 // locationId is id corresponding to location w/ respect to Google Places API
 function getPhotos(locationId){
-  var filepath = __dirname + '/locations/' + locationId + ".json";
+  const filepath = __dirname + '/locations/' + locationId + ".json";
   return readJsonFileSync(filepath);
 }
 
 io.on('connection', function(socket){
   socket.on('load_city', function(locationId){
-    var json = getPhotos(locationId);
+    const json = getPhotos(locationId);
     socket.json.emit('load_finish', json);
     console.log(json);
   });
+
+  socket.on('place_location', function(data) {
+    const obj = getPhotos("custom");
+    const pos = data.pos;
+    const name = data.name;
+    const url = data.url;
+
+    obj.locations.push({
+      name: name,
+      id: "-1",
+      lat: pos.lat,
+      long: pos.lng,
+      photos: [url]
+    })
+    const toWrite = JSON.stringify(obj, null, 4); // pretty-print json
+    console.log(toWrite)
+    fs.writeFile(__dirname + '/locations/custom.json', toWrite, 'utf8', () => {
+      socket.emit('update_custom');
+    });
+  })
 });
 
 server.listen(3000, function () {

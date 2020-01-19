@@ -106,6 +106,7 @@ body {
 }
 
 #marker {
+  pointer-events: none;
   position: absolute;
   display: none;
   z-index: 5;
