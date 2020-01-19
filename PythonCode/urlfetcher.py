@@ -5,41 +5,62 @@ import urllib.error
 from bs4 import BeautifulSoup
 import ssl
 import json
+import os
+import time
 
-
-class Insta_Image_Links_Scraper:
-
-    def getlinks(self, locationid, url):
-
-        html = urllib.request.urlopen(url, context=self.ctx).read()
+def getlinks(locationid, url):
+    try:
+        html = urllib.request.urlopen(url, context=ctx).read()
         soup = BeautifulSoup(html, 'html.parser')
         script = soup.find('script', text=lambda t: \
-                           t.startswith('window._sharedData'))
+                        t.startswith('window._sharedData'))
         page_json = script.text.split(' = ', 1)[1].rstrip(';')
         data = json.loads(page_json)
-        print ('Scraping links with locationid: ' + locationid +"...........")
+        images_links = []
+        print ('Scraping links with IG locationid: ' + locationid +"...........")
         for post in data['entry_data']['LocationsPage'][0]['graphql'
             ]['location']['edge_location_to_top_posts']['edges']:
-            image_src = post['node']['thumbnail_resources'][1]['src']
-            hs = open(locationid + '.txt', 'a')
-            hs.write(image_src + '\n')
-            hs.close()
-
-    def main(self):
-        self.ctx = ssl.create_default_context()
-        self.ctx.check_hostname = False
-        self.ctx.verify_mode = ssl.CERT_NONE
-
-        with open('input.txt') as f:
-            self.content = f.readlines()
-        self.content = [x.strip() for x in self.content]
-        for locationid in self.content:
-            self.getlinks(locationid,
-                          'https://www.instagram.com/explore/locations/'
-                          + locationid + '/')
+            images_links.append(post['node']['thumbnail_resources'][1]['src'])
+        lat = data['entry_data']['LocationsPage'][0]['graphql'
+            ]['location']['lat']
+        lng = data['entry_data']['LocationsPage'][0]['graphql'
+            ]['location']['lng'] 
+        return {"lat" : lat, "long" : lng, "links" : images_links}
+    except:
+        print("Error resolving location ID #" + str(locationid))
+        return {"lat" : "40.70", "long" : "-74.0060", "links" : []}
 
 
-if __name__ == '__main__':
-    obj = Insta_Image_Links_Scraper()
-    obj.main()
+def populateloc(file):
+    with open(file, 'r') as openfile: 
+        # Reading from json file 
+        opened = json.load(openfile) 
+    for locs in opened['locations']: #populate
+        scraped = getlinks(locs['id'],'https://www.instagram.com/explore/locations/' + locs['id'] + '/')
+        if not locs.get('lat'):
+            locs.update({"lat" : str(scraped.get('lat'))})
+        if not locs.get('long'):
+            locs.update({'long' : str(scraped.get('long'))})
+        locs['photos'].clear()
+        for links in scraped.get('links'):
+            locs['photos'].append(links)
+    # Write new loc
+    with open(file, "w") as outfile: 
+        json.dump(opened, outfile, indent=4) 
 
+#FETCH
+while(True):
+    ctx = ssl.create_default_context()
+    ctx.check_hostname = False
+    ctx.verify_mode = ssl.CERT_NONE
+
+    # populate loc files in directory with hot photo links
+    path = "../server/locations"
+    directory = os.fsencode(path)
+    for file in os.listdir(directory):
+         filename = os.fsdecode(file)
+         if filename.endswith(".json"):
+            populateloc(path + "/" + filename)
+            time.sleep(5) # delay requests by 5 seconds
+    time.sleep(300) # call every 5 mins
+            
