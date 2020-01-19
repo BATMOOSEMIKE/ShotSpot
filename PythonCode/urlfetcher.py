@@ -36,6 +36,8 @@ def populateloc(file):
         # Reading from json file 
         opened = json.load(openfile) 
     for locs in opened['locations']: #populate
+        if locs.get('troll') or locs.get('troll') == 1:
+            continue
         scraped = getlinks(locs['id'],'https://www.instagram.com/explore/locations/' + locs['id'] + '/')
         if not locs.get('lat'):
             locs.update({"lat" : str(scraped.get('lat'))})
@@ -49,7 +51,6 @@ def populateloc(file):
     with open(file, "w") as outfile: 
         json.dump(opened, outfile, indent=4) 
 
-<<<<<<< Updated upstream
 #FETCH
 while(True):
     ctx = ssl.create_default_context()
@@ -66,8 +67,3 @@ while(True):
             time.sleep(5) # delay requests by 5 seconds
     time.sleep(300) # call every 5 mins
             
-=======
-if __name__ == '__main__':
-    obj = Insta_Image_Links_Scraper()
-    obj.main()
->>>>>>> Stashed changes
