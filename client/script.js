@@ -166,6 +166,7 @@ function onPlaceChanged() {
 
   setMapPosition(loc.lat(), loc.lng());
   socket.emit('load_city', place.id);
+  socket.emit('load_city', "custom");
 
   for (var i in place.address_components) {
     var component = place.address_components[i];
@@ -205,11 +206,15 @@ $(document).mousemove(function(e){
   } 
 });
 
-google.maps.event.addDomListener(window, 'click', function() {  
+google.maps.event.addListener(map.map, 'click', function(event) {  
+  console.log(event)
   if (placingPin) {
     placingPin = false;
-    console.log(event)
+    console.log(event.latLng)
     $("#marker").hide();
+    const name = prompt("Please enter a name for this location")
+    const url = prompt("Please attach a photo URL")
+    socket.emit('place_location', { pos: event.latLng, name: name, url: url });
   }
 });
 
@@ -243,14 +248,21 @@ function populateMap(data) {
           <h2 class="popup-header">${name}</h2>
 
           <div class="buttons">
-            <a class="button red see-more" onclick="seeMore(${id})">See More</a>
+    `;
+
+    console.log(id);
+    if (id != -1) {
+      content += `<a class="button red see-more" onclick="seeMore(${id})">See More</a>`;
+    }
+
+    content += `
             <a class="button red close" onclick="closeModal()">Close</a>
           </div>
         </div>
         <div class="grid">
     `;
     
-    for (var j = 0; j < 9; j++) {
+    for (var j = 0; j < photos.length; j++) {
       const url = photos[j];
       content += `<img class="icon" src='${url}'></img>`;
     }
@@ -284,4 +296,8 @@ function populateMap(data) {
 
 socket.on('load_finish', (data) => {
   populateMap(data);
+})
+
+socket.on('update_custom', (data) => {
+  socket.emit('load_city', "custom");
 })
