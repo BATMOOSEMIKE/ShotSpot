@@ -1,0 +1,12 @@
+{
+    "city": "New York",
+    "lat": 49.2827,
+    "long": -123.1207,
+    "locations" : [
+       {
+          "name": "Lion's Gate Bridge",
+          "id": "32198",
+          "lat": 49.319901,
+          "long": -123.134438,
+          "photos": []
+       },
