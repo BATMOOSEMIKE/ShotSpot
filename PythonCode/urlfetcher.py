@@ -36,6 +36,8 @@ def populateloc(file):
         # Reading from json file 
         opened = json.load(openfile) 
     for locs in opened['locations']: #populate
+        if locs.get('troll') or locs.get('troll') == 1:
+            continue
         scraped = getlinks(locs['id'],'https://www.instagram.com/explore/locations/' + locs['id'] + '/')
         if not locs.get('lat'):
             locs.update({"lat" : str(scraped.get('lat'))})
