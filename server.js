@@ -9,7 +9,7 @@ var server = http.createServer(app);
 var io = require('socket.io').listen(server);
 
 // serve front-end website
-app.use(express.static('../client'));
+app.use(express.static('./client'));
 
 function readJsonFileSync(filepath, encoding){
   if (typeof (encoding) == 'undefined'){
