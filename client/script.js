@@ -4,6 +4,7 @@ var map = new GMaps({
   el: '#map',
   lat: 40.70,
   lng: -74.0060,
+  markers: [],
   zoomControl: false,
   mapTypeControl: false,
   scaleControl: false,
@@ -14,6 +15,15 @@ var map = new GMaps({
     {elementType: 'geometry', stylers: [{color: '#242f3e'}]},
     {elementType: 'labels.text.stroke', stylers: [{color: '#242f3e'}]},
     {elementType: 'labels.text.fill', stylers: [{color: '#746855'}]},
+    {
+      "featureType": "all",
+      "elementType": "labels.icon",
+      "stylers": [
+          {
+              "visibility": "off"
+          }
+      ]
+    },
     {
       featureType: 'administrative.locality',
       elementType: 'labels.text.fill',
