@@ -1,4 +1,5 @@
-var currentLocation = "New York City";
+var defaultCity = {name: "New York City", id: "7eae6a016a9c6f58e2044573fb8f14227b6e1f96"}
+var currentLocation = defaultCity.name;
 var placingPin = false;
 var clicked = false;
 var socket = io();
@@ -105,6 +106,7 @@ var map = new GMaps({
   ]
 });
 setCurrentLocation(currentLocation);
+socket.emit('load_city', defaultCity.id);
 
 socket.emit('start');
 
@@ -135,6 +137,15 @@ function positionSuccess(pos) {
   setCurrentLocation(currentLocation);
 }
 
+function getLocal() {
+  setTimeout(() => {
+    const coords = {latitude: 43.4671751, longitude: -80.5508004}
+    setMapPosition(coords.latitude, coords.longitude);
+    currentLocation = "Your location";
+    setCurrentLocation(currentLocation);
+  }, 1500)
+}
+
 function positionError(err) {
   console.warn(`Could not get location (${err.code}): ${err.message}`);
 }
@@ -142,8 +153,8 @@ function positionError(err) {
 $("#pinpoint").click(() => {
   currentLocation = "Getting current location...";
   setCurrentLocation(currentLocation);
-
-  navigator.geolocation.getCurrentPosition(positionSuccess, positionError, options);
+  getLocal();
+  // navigator.geolocation.getCurrentPosition(positionSuccess, positionError, options);
 })
 
 function initializeAutocomplete(id) {
@@ -227,6 +238,10 @@ function seeMore(id) {
   openInNewTab("https://www.instagram.com/explore/locations/" + id);
 }
 
+function openPost(shortcode) {
+  openInNewTab("https://www.instagram.com/p/" + shortcode);
+}
+
 function closeModal() {
   map.hideInfoWindows();
 }
@@ -240,6 +255,7 @@ function populateMap(data) {
     const id = location.id;
     const latlng = {lat: location.lat, lng: location.long};
     const photos = location.photos;
+    const urls = location.urls;
 
     var content = 
     `
@@ -262,9 +278,11 @@ function populateMap(data) {
         <div class="grid">
     `;
     
-    for (var j = 0; j < photos.length; j++) {
+    for (var j = 0; j < 9; j++) {
       const url = photos[j];
-      content += `<img class="icon" src='${url}'></img>`;
+      if (url) {
+        content += `<img class="icon" src='${url}' onclick="openPost('${urls[j]}')"></img>`;
+      }
     }
 
     content += '</div></div>';

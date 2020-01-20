@@ -58,6 +58,7 @@ body {
 
 .open{
   display:inline-block;
+  pointer-events: auto;
   vertical-align:middle;
   border-radius:30px;
   font-size: 1rem;
@@ -136,6 +137,7 @@ body {
 
 .icon {
   width: 33.333333%;
+  cursor: hand;
 }
 
 .popup-header {
