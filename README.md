@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="icon.jpg" width="256">
+</p>
+
 # Inspiration
 
 How often have you found yourself in a new city, hoping to take that beautiful shot for Instagram or LinkedIn? Wouldn't it be awesome if there was an app that could tell you the best photography spots without the hassle of searching for individual locations yourself? That's what inspired us to create ShotSpot, an easy to use web app that displays the locations of top Instagram posts for any city in the world on a user-friendly map navigation system.
